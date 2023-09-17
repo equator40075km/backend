@@ -1,8 +1,7 @@
 from django.urls import path, include
-
-from . import routers
+from .routers import article_router
 
 
 urlpatterns = [
-    path('articles/', include(routers.article_router.urls))
+    path('articles/', include(article_router.urls))
 ]
