@@ -19,5 +19,9 @@ class TokenAPIView(APIView):
         if token is None:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-        user = Token.objects.get(key=token).user
+        try:
+            user = Token.objects.get(key=token).user
+        except Exception:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
         return Response(data={'user_id': user.id})
