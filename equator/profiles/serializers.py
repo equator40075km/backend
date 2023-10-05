@@ -1,12 +1,11 @@
 from rest_framework import serializers
-from .models import Profile
-from django.contrib.auth.models import User
+from .models import Profile, User
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email')
+        fields = ('id', 'first_name', 'last_name')
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -17,6 +16,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def update(self, instance, validated_data):
+        print(validated_data)
+
         user_data = validated_data.pop('user')
         instance.user.first_name = user_data.get('first_name')
         instance.user.last_name = user_data.get('last_name')

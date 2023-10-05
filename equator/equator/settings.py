@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'corsheaders',
+    "django_extensions",
     'articles.apps.ArticlesConfig',
     'profiles.apps.ProfilesConfig'
 ]
@@ -125,3 +126,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
+
+AUTH_USER_MODEL = "profiles.User"
