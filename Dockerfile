@@ -13,4 +13,3 @@ COPY . .
 EXPOSE 8000
 
 CMD ["python", "./equator/manage.py", "runserver", "0.0.0.0:8000"]
-# CMD ["python", "./equator/manage.py", "runserver_plus", "--cert-file", "cert.pem", "--key-file", "key.pem"]

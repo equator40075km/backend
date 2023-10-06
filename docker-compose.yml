@@ -8,9 +8,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_DB: equator
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: "$PG_DB_NAME"
+      POSTGRES_USER: "$PG_USER"
+      POSTGRES_PASSWORD: "$PG_PASSWORD"
     volumes:
       - db:/var/lib/postgresql/data
 
