@@ -1,27 +1,23 @@
-from rest_framework import viewsets, status
+from rest_framework import status, mixins, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
 from .models import Profile
 from .serializers import ProfileSerializer
+from .permissions import IsProfileOwner
 
 
-class ProfileViewSet(viewsets.ModelViewSet):
+class ProfileViewSet(mixins.RetrieveModelMixin,
+                     mixins.UpdateModelMixin,
+                     viewsets.GenericViewSet):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
+    permission_classes = [IsProfileOwner]
 
 
 class TokenAPIView(APIView):
     def get(self, request: Request):
-        token = request.query_params.get('token')
-
-        if token is None:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-        try:
-            user = Token.objects.get(key=token).user
-        except Exception:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-        return Response(data={'user_id': user.id})
+        if request.auth:
+            return Response(data={'user_id': request.auth.user.id})
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
