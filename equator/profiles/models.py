@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
+from articles.models import Article
 
 
 class User(AbstractUser):
@@ -21,7 +22,7 @@ class Profile(models.Model):
     bday = models.DateField(default=None, blank=True, null=True)
     gender = models.CharField(max_length=6, blank=True)
     is_author = models.BooleanField(default=False)
-    favorites = models.TextField(max_length=1000, blank=True)
+    favorites = models.ManyToManyField(Article, blank=True, related_name='+')
     avatar = models.URLField(blank=True)
 
     def __str__(self):
